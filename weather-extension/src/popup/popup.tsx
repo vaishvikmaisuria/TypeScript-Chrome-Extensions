@@ -18,6 +18,7 @@ const App: React.FC<{}> = () => {
     const [cityInput, setCityInput] = useState<string>("");
     const [options, setOptions] = useState<LocalStorageOptions | null>({
         tempScale: "metric",
+        homeCity: 'Toronto'
     });
 
     useEffect(() => {
@@ -111,7 +112,10 @@ const App: React.FC<{}> = () => {
                     </Paper>
                 </Grid>
             </Grid>
-
+            {
+                options.homeCity != '' &&
+                <WeatherCard city={options.homeCity} tempScale={options.tempScale} />
+            }
             {cities.map((city, index) => (
                 <WeatherCard
                     key={index}
