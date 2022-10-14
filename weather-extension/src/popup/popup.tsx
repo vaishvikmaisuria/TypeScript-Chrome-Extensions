@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { render } from "react-dom";
+import { createRoot } from 'react-dom/client';
 import "@fontsource/roboto";
 import "./popup.css";
 import WeatherCard from "../components/WeatherCard";
 import { Box, Paper, InputBase, Grid, IconButton } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
+import { Add as AddIcon, PictureInPicture as PictureInPictureIcon } from "@mui/icons-material";
 import {
     setStoredCities,
     getStoredCities,
@@ -12,14 +13,12 @@ import {
     getStoredOptions,
     LocalStorageOptions,
 } from "../utils/storage";
+import { Messages } from '../utils/messages';
 
 const App: React.FC<{}> = () => {
     const [cities, setCities] = useState<string[]>([]);
     const [cityInput, setCityInput] = useState<string>("");
-    const [options, setOptions] = useState<LocalStorageOptions | null>({
-        tempScale: "metric",
-        homeCity: 'Toronto'
-    });
+    const [options, setOptions] = useState<LocalStorageOptions | null>(null);
 
     useEffect(() => {
         getStoredCities().then((cities) => {
@@ -58,6 +57,19 @@ const App: React.FC<{}> = () => {
         setStoredOptions(updateOptions).then(() => {
             setOptions(updateOptions)
         })
+    }
+    const handleOverlayButtonClick = () => {
+        chrome.tabs.query(
+            {
+                active: true,
+                currentWindow: true,
+            },
+            (tabs) => {
+                if (tabs.length > 0) {
+                    chrome.tabs.sendMessage(tabs[0].id, Messages.TOGGLE_OVERLAY)
+                }
+            }
+        )
     }
 
     if (!options) {
@@ -111,6 +123,15 @@ const App: React.FC<{}> = () => {
                         </Box>
                     </Paper>
                 </Grid>
+                <Grid item>
+                    <Paper>
+                        <Box py={'4px'}>
+                            <IconButton onClick={handleOverlayButtonClick}>
+                                <PictureInPictureIcon />
+                            </IconButton>
+                        </Box>
+                    </Paper>
+                </Grid>
             </Grid>
             {
                 options.homeCity != '' &&
@@ -129,6 +150,8 @@ const App: React.FC<{}> = () => {
     );
 };
 
+
 const root = document.createElement("div");
 document.body.appendChild(root);
 render(<App />, root);
+

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { fetchOpenWeatherData, OpenWeatherTempScale } from "../../utils/api";
-import { Box, Card, CardContent, CardActions, Typography } from "@mui/material";
+import { fetchOpenWeatherData, OpenWeatherTempScale, getWeatherIconSrc, OpenWeatherData } from "../../utils/api";
+import { Box, Card, CardContent, CardActions, Typography, Grid } from "@mui/material";
 import WeatherCardContainer from "../WeatherCardContainer/WeatherCardContainer";
 import { WeatherCardState } from "../../constants/WeatherCardState";
 
 const WeatherCard: React.FC<{ city: string, tempScale: OpenWeatherTempScale , onDelete?: () => void }> = ({ city, tempScale, onDelete }) => {
-    const [weatherData, setWeatherData] = useState(null);
+    const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null);
     const [cardState, setCardState] = useState<WeatherCardState>("loading");
 
     useEffect(() => {
@@ -24,7 +24,8 @@ const WeatherCard: React.FC<{ city: string, tempScale: OpenWeatherTempScale , on
     if (cardState == "error" || cardState == "loading" || !weatherData) {
         return (
             <WeatherCardContainer onDelete={onDelete}>
-                <Typography variant="body1">
+                <Typography className="weatherCard-title">{city}</Typography>
+                <Typography variant="body1" className='weatherCard-body'>
                     {cardState == "loading"
                         ? "Loading..."
                         : "Error: could not retrieve weather data for this city."}
@@ -35,14 +36,28 @@ const WeatherCard: React.FC<{ city: string, tempScale: OpenWeatherTempScale , on
 
     return (
         <WeatherCardContainer  onDelete={onDelete}>
-            <Typography variant="h5">{weatherData.name}</Typography>
-            <Typography variant="body1">
-                {Math.round(weatherData.main.temp)}
-            </Typography>
-            <Typography variant="body1">
-                Feels like:
-                {Math.round(weatherData.main.feels_like)}
-            </Typography>
+            <Grid container>
+                <Grid item>
+                    <Typography className="weatherCard-title">{weatherData.name}</Typography>
+                    <Typography className="weatherCard-temp">
+                        {Math.round(weatherData.main.temp)}
+                    </Typography>
+                    <Typography className="weatherCard-body">
+                         Feels like:
+                         {Math.round(weatherData.main.feels_like)}
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    {weatherData.weather.length > 0 && (
+                        <>
+                        <img src={getWeatherIconSrc(weatherData.weather[0].icon)} />
+                        <Typography className="weatherCard-body">
+                            {weatherData.weather[0].main}
+                        </Typography>
+                        </>
+                    )}
+                </Grid>
+            </Grid>
         </WeatherCardContainer>
     );
 };

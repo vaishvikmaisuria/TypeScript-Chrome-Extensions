@@ -6,6 +6,7 @@ import {
     Card,
     CardContent,
     Grid,
+    Switch,
     TextField,
     Typography,
 } from "@mui/material";
@@ -36,6 +37,13 @@ const App: React.FC<{}> = () => {
             homeCity,
         });
     };
+
+    const handleAutoOverlayChange = (hasAutoOverlay: boolean) => {
+        setOptions({
+            ...options,
+            hasAutoOverlay,
+        })
+    }
 
     const handleSaveButtonClick = () => {
         setFormState("saving");
@@ -77,6 +85,17 @@ const App: React.FC<{}> = () => {
                             />
                         </Grid>
                         <Grid item xs={10}>
+                            <Typography variant="body1">
+                                Auto toggle overlay on webpage load
+                            </Typography>
+                            <Switch
+                                color="primary"
+                                checked={options.hasAutoOverlay}
+                                onChange={(event, checked) => {handleAutoOverlayChange(checked)}}
+                                disabled={isFieldsDisabled}
+                            />
+                        </Grid>
+                        <Grid item xs={10}>
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -92,6 +111,7 @@ const App: React.FC<{}> = () => {
         </Box>
     );
 };
+
 const root = document.createElement("div");
 document.body.appendChild(root);
 

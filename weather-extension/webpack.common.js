@@ -1,7 +1,8 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     // mode: 'development',
@@ -41,12 +42,13 @@ module.exports = {
                 }
             ]
         }),
-        ...getHtmlPlugins(['popup', 'options'])
+        ...getHtmlPlugins(['popup', 'options']),
         // new HtmlPlugin({
         //     title: 'React Extension',
         //     filename: 'popup.html',
         //     chunks: ['popup']
         // })
+
     ],
     resolve: {
         extensions: ['.tsx', '.ts', ".js"]
