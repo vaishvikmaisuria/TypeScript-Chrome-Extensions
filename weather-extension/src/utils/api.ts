@@ -38,5 +38,5 @@ export async function fetchOpenWeatherData(city:string, tempScale: OpenWeatherTe
 }
 
 export function getWeatherIconSrc(iconCode: string) {
-    return `https:/openweathermap.org/img/wn/${iconCode}@2x.png`
+    return `https://openweathermap.org/img/wn/${iconCode}@2x.png`
 }

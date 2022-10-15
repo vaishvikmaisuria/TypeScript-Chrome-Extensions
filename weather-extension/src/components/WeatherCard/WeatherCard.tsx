@@ -3,6 +3,7 @@ import { fetchOpenWeatherData, OpenWeatherTempScale, getWeatherIconSrc, OpenWeat
 import { Box, Card, CardContent, CardActions, Typography, Grid } from "@mui/material";
 import WeatherCardContainer from "../WeatherCardContainer/WeatherCardContainer";
 import { WeatherCardState } from "../../constants/WeatherCardState";
+import './WeatherCard.css'
 
 const WeatherCard: React.FC<{ city: string, tempScale: OpenWeatherTempScale , onDelete?: () => void }> = ({ city, tempScale, onDelete }) => {
     const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null);
@@ -36,7 +37,7 @@ const WeatherCard: React.FC<{ city: string, tempScale: OpenWeatherTempScale , on
 
     return (
         <WeatherCardContainer  onDelete={onDelete}>
-            <Grid container>
+            <Grid container justifyContent="space-around">
                 <Grid item>
                     <Typography className="weatherCard-title">{weatherData.name}</Typography>
                     <Typography className="weatherCard-temp">

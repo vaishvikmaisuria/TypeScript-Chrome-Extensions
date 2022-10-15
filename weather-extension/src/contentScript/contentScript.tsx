@@ -6,6 +6,7 @@ import { render } from "react-dom";
 import WeatherCard from "../components/WeatherCard";
 import { Messages } from "../utils/messages";
 import { getStoredOptions, LocalStorageOptions } from "../utils/storage";
+import './contentScript.css'
 
 const App: React.FC<{}> = () => {
     const [options, setOptions] = useState<LocalStorageOptions | null>(null);
