@@ -8,4 +8,5 @@ The following project are practice projects and are mini projects:
 3. timer-extension
 4. tc-show-extension
 
-The final project is in "weather-extension"
+
+The final project is in "weather-extension" in TypeScript and React. This project shows you weather data and also blocks ads. 
