@@ -17,7 +17,16 @@
         "default_popup": "popup.html",
         "default_title": "Weather Extension"
     },
-    "permissions": ["storage", "alarms", "contextMenus"],
+    "permissions": ["storage", "alarms", "contextMenus", "declarativeNetRequest"],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset_1",
+                "enabled": false,
+                "path": "rules.json"
+            }
+        ]
+    },
     "options_page": "options.html",
     "background": {
         "service_worker": "background.js"

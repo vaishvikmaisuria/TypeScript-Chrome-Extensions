@@ -1,4 +1,16 @@
 
+// remove ads
+function filterWebsiteAds() {
+    const divs = document.getElementsByTagName('div')
+    for (const div of divs) {
+        if(div.className.split(" ").indexOf('ad') != -1 || div.className.split(" ").indexOf('poster') != -1 || div.className.split(" ").indexOf('advertisement') != -1 ) {
+            div.style.display='none !important'
+        }
+    }
+}
+
+filterWebsiteAds()
+
 import { Card } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { render } from "react-dom";
@@ -55,6 +67,8 @@ const App: React.FC<{}> = () => {
 const root = document.createElement("div");
 document.body.appendChild(root);
 render(<App />, root);
+
+
 
 // chrome.runtime.sendMessage("From the content script!", (response) => {
 //     console.log(response)
